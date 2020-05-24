@@ -34,7 +34,11 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxtjs/eslint-module', '@nuxt/typescript-build'],
+  buildModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxt/typescript-build',
+    '@nuxtjs/vuetify'
+  ],
   /*
    ** Nuxt.js modules
    */
