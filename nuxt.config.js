@@ -1,3 +1,6 @@
+require('dotenv').config()
+const { API_URL } = process.env
+
 export default {
   mode: 'spa',
   /*
@@ -36,17 +39,44 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/auth',
+    '@nuxtjs/pwa'
   ],
+  env: {
+    API_URL
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  auth: {
+    redirect: {
+      login: '/admin/login',
+      logout: '/admin/login',
+      callback: false,
+      home: '/admin/dashboard'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/users/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          user: { url: '/api/users/me', method: 'get', propertyName: false }
+        }
+      }
+    }
+  },
+  router: {
+    middleware: ['auth']
+  },
   /*
    ** Build configuration
    */
@@ -54,6 +84,16 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(_config, _ctx) {}
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
   }
 }
