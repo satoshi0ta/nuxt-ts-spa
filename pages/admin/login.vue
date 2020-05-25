@@ -8,21 +8,13 @@
               <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Login form</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :href="source" icon large target="_blank" v-on="on">
-                      <v-icon>mdi-code-tags</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Source</span>
-                </v-tooltip>
               </v-toolbar>
               <v-card-text>
                 <v-form>
                   <v-text-field
                     label="Login"
                     name="login"
-                    prepend-icon="person"
+                    prepend-icon="mdi-account-circle"
                     type="text"
                   ></v-text-field>
 
@@ -30,7 +22,7 @@
                     id="password"
                     label="Password"
                     name="password"
-                    prepend-icon="lock"
+                    prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
                 </v-form>
@@ -46,12 +38,3 @@
     </v-content>
   </v-app>
 </template>
-
-<script>
-export default {
-  props: {
-    // eslint-disable-next-line vue/require-default-prop
-    source: String
-  }
-}
-</script>
